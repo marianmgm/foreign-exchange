@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/exchangeRate")
 @Tag(name = "ExchangeRates")
 public class ExchangeRateRestController{
-    private ExchangeRateService exchangeRateService;
+    private final ExchangeRateService exchangeRateService;
     @Autowired
     public ExchangeRateRestController(ExchangeRateService exchangeRateService) {
         this.exchangeRateService = exchangeRateService;

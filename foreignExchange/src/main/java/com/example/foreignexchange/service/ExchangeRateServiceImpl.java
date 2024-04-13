@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class ExchangeRateServiceImpl implements ExchangeRateService{
     private static final String API_KEY = "68271c6d7da50fa9f1ddcab9";
     private static final String API_URL = "https://v6.exchangerate-api.com/v6/" + API_KEY+ "/pair/";
-    private ExchangeRateRepository exchangeRateRepository;
+    private final ExchangeRateRepository exchangeRateRepository;
     private RestTemplate restTemplate;
     @Autowired
     public ExchangeRateServiceImpl(ExchangeRateRepository exchangeRateRepository, RestTemplate restTemplate) {
