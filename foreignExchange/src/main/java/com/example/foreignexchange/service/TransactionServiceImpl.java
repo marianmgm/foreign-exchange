@@ -1,6 +1,7 @@
 package com.example.foreignexchange.service;
 
 import com.example.foreignexchange.models.Transaction;
+import com.example.foreignexchange.models.TransactionFilterOptions;
 import com.example.foreignexchange.repository.TransactionRepository;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
@@ -54,5 +56,9 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public Transaction getById(int id) {
         return transactionRepository.getById(id);
+    }
+    @Override
+    public List<Transaction> getFilteredTransactions(TransactionFilterOptions filterOptions) {
+        return transactionRepository.getFilteredTransactions(filterOptions);
     }
 }

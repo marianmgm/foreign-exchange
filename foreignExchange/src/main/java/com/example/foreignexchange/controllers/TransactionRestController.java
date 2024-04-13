@@ -3,6 +3,7 @@ package com.example.foreignexchange.controllers;
 import com.example.foreignexchange.exceptions.EntityNotFoundException;
 import com.example.foreignexchange.models.ExchangeRate;
 import com.example.foreignexchange.models.Transaction;
+import com.example.foreignexchange.models.TransactionFilterOptions;
 import com.example.foreignexchange.service.TransactionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -15,6 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/transaction")
@@ -47,6 +50,12 @@ public class TransactionRestController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
+    @GetMapping("/filter")
+    public ResponseEntity<List<Transaction>> getFilteredTransactions(TransactionFilterOptions filterOptions) {
+        List<Transaction> filteredTransactions = transactionService.getFilteredTransactions(filterOptions);
+        return ResponseEntity.ok(filteredTransactions);
+    }
+
 
 
 
