@@ -1,6 +1,7 @@
 package com.example.foreignexchange.controllers;
 
 import com.example.foreignexchange.exceptions.EntityNotFoundException;
+import com.example.foreignexchange.exceptions.InvalidCurrencyCodeException;
 import com.example.foreignexchange.models.ExchangeRate;
 import com.example.foreignexchange.models.Transaction;
 import com.example.foreignexchange.models.TransactionFilterOptions;
@@ -39,8 +40,12 @@ public class TransactionRestController {
             @PathVariable String source,
             @PathVariable String target,
             @PathVariable Double amount) {
-        Transaction createdTransaction = transactionService.create(source,amount, target);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdTransaction);
+        try {
+            Transaction createdTransaction = transactionService.create(source, amount, target);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdTransaction);
+        }catch (InvalidCurrencyCodeException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
     }
     @GetMapping("/{id}")
     public Transaction get(@PathVariable int id) {

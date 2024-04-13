@@ -2,6 +2,7 @@ package com.example.foreignexchange.service;
 
 import com.example.foreignexchange.models.ExchangeRate;
 import com.example.foreignexchange.repository.ExchangeRateRepository;
+import com.example.foreignexchange.utils.CurrencyCodeValidator;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -48,6 +49,7 @@ public class ExchangeRateServiceImpl implements ExchangeRateService{
 
     @Override
     public ExchangeRate create(String source, String target){
+        CurrencyCodeValidator.validateCurrencyCodes(source,target);
         ExchangeRate exchangeRate=new ExchangeRate();
         exchangeRate.setSource(source);
         exchangeRate.setTarget(target);

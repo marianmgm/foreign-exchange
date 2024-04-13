@@ -3,6 +3,7 @@ package com.example.foreignexchange.service;
 import com.example.foreignexchange.models.Transaction;
 import com.example.foreignexchange.models.TransactionFilterOptions;
 import com.example.foreignexchange.repository.TransactionRepository;
+import com.example.foreignexchange.utils.CurrencyCodeValidator;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public Transaction create(String source, Double sourceAmount, String target) {
+        CurrencyCodeValidator.validateCurrencyCodes(source,target);
         Transaction transaction=new Transaction();
         transaction.setSourceCurrency(source);
         transaction.setSourceAmount(sourceAmount);
