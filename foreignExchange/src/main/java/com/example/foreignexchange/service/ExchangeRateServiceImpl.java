@@ -2,6 +2,7 @@ package com.example.foreignexchange.service;
 
 import com.example.foreignexchange.models.ExchangeRate;
 import com.example.foreignexchange.repository.ExchangeRateRepository;
+import com.example.foreignexchange.utils.CurrencyCodeValidator;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 public class ExchangeRateServiceImpl implements ExchangeRateService{
     private static final String API_KEY = "68271c6d7da50fa9f1ddcab9";
     private static final String API_URL = "https://v6.exchangerate-api.com/v6/" + API_KEY+ "/pair/";
-    private ExchangeRateRepository exchangeRateRepository;
+    private final ExchangeRateRepository exchangeRateRepository;
     private RestTemplate restTemplate;
     @Autowired
     public ExchangeRateServiceImpl(ExchangeRateRepository exchangeRateRepository, RestTemplate restTemplate) {
@@ -48,6 +49,7 @@ public class ExchangeRateServiceImpl implements ExchangeRateService{
 
     @Override
     public ExchangeRate create(String source, String target){
+        CurrencyCodeValidator.validateCurrencyCodes(source,target);
         ExchangeRate exchangeRate=new ExchangeRate();
         exchangeRate.setSource(source);
         exchangeRate.setTarget(target);
