@@ -1,8 +1,10 @@
 package com.example.foreignexchange.controllers;
 
+import com.example.foreignexchange.dto.ExchangeRateResponse;
 import com.example.foreignexchange.models.ExchangeRate;
 import com.example.foreignexchange.service.ExchangeRateService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -26,15 +28,17 @@ public class ExchangeRateRestController{
         this.exchangeRateService = exchangeRateService;
     }
     @PostMapping("/{source}/{target}")
-    @Operation(summary = "Generate an exchange rate")
+    @Operation(summary = "Generates an exchange rate based on a given source code and target code")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Exchange rate generated",
+            @ApiResponse(responseCode = "201", description = "Exchange rate generated",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ExchangeRate.class))}),
+                            schema = @Schema(implementation = ExchangeRateResponse.class))}),
     })
     public ResponseEntity<ExchangeRate> create(
-            @PathVariable String source,
-            @PathVariable String target) {
+            @PathVariable("source") @Parameter(description = "Source currency code",
+                    example = "EUR", required = true) String source,
+            @PathVariable("target") @Parameter(description = "Target currency code",
+                    example = "BGN", required = true) String target) {
         ExchangeRate createdExchangeRate = exchangeRateService.create(source, target);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdExchangeRate);
     }
