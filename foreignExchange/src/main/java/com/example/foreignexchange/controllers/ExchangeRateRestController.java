@@ -3,7 +3,6 @@ package com.example.foreignexchange.controllers;
 import com.example.foreignexchange.dto.ExchangeRateRequest;
 import com.example.foreignexchange.dto.ExchangeRateResponse;
 import com.example.foreignexchange.exceptions.InvalidCurrencyCodeException;
-import com.example.foreignexchange.mapper.ExchangeRateMapper;
 import com.example.foreignexchange.models.ExchangeRate;
 import com.example.foreignexchange.service.ExchangeRateService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,11 +23,10 @@ import org.springframework.web.server.ResponseStatusException;
 @Tag(name = "ExchangeRates")
 public class ExchangeRateRestController{
     private final ExchangeRateService exchangeRateService;
-    private final ExchangeRateMapper exchangeRateMapper;
+
     @Autowired
-    public ExchangeRateRestController(ExchangeRateService exchangeRateService, ExchangeRateMapper exchangeRateMapper) {
+    public ExchangeRateRestController(ExchangeRateService exchangeRateService) {
         this.exchangeRateService = exchangeRateService;
-        this.exchangeRateMapper = exchangeRateMapper;
     }
     @PostMapping("/{source}/{target}")
     @Operation(summary = "Generates an exchange rate based on a given source code and target code")
