@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Service
@@ -58,6 +57,8 @@ public class ExchangeRateServiceImpl implements ExchangeRateService{
         exchangeRateRepository.create(exchangeRate);
         return exchangeRate;
     }
+    @Override
+    public ExchangeRate getById(int id){return exchangeRateRepository.getById(id);}
 
 
 

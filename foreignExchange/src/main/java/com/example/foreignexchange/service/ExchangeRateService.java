@@ -9,4 +9,6 @@ public interface ExchangeRateService {
     Double parseExchangeRateFromJson(String jsonResponse);
 
     ExchangeRate create(String source, String target);
+
+    ExchangeRate getById(int id);
 }
