@@ -1,5 +1,6 @@
 package com.example.foreignexchange.controllers;
 
+import com.example.foreignexchange.dto.TransactionRequest;
 import com.example.foreignexchange.dto.TransactionResponse;
 import com.example.foreignexchange.exceptions.EntityNotFoundException;
 import com.example.foreignexchange.exceptions.InvalidCurrencyCodeException;
@@ -40,24 +41,38 @@ public class TransactionRestController {
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = TransactionResponse.class))}),
     })
-    public ResponseEntity<Transaction> create(
+    public ResponseEntity<TransactionResponse> create(
             @PathVariable("source") @Parameter(description = "Source currency code",
                     example = "EUR", required = true) String source,
             @PathVariable("target") @Parameter(description = "Target currency code",
                     example = "BGN", required = true) String target,
             @PathVariable("amount") @Parameter(description = "Source amount",
                     example = "100.00", required = true) Double amount)
-//            @PathVariable String source,
-//            @PathVariable String target,
-//            @PathVariable Double amount)
     {
         try {
             Transaction createdTransaction = transactionService.create(source, amount, target);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdTransaction);
+            return ResponseEntity.status(HttpStatus.CREATED).body(new TransactionResponse(createdTransaction.getId(), createdTransaction.getTargetAmount()));
         }catch (InvalidCurrencyCodeException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
+    @PostMapping("/")
+    @Operation(summary = "Generates a transaction based on given source code, target code, and source amount without parameters. Version 2 of the POST controller for a more RESTful API")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Transaction generated",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = TransactionResponse.class))}),
+    })
+    public ResponseEntity<TransactionResponse> createTransaction(
+            @RequestBody TransactionRequest request) {
+        try {
+            Transaction createdTransaction = transactionService.create(request.getSourceCurrency(),request.getAmount(),request.getTargetCurrency());
+            return ResponseEntity.status(HttpStatus.CREATED).body(new TransactionResponse(createdTransaction.getId(), createdTransaction.getTargetAmount()));
+        } catch (InvalidCurrencyCodeException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+    }
+
     @GetMapping("/{id}")
     @Operation(summary = "Gets a transaction by its unique Id")
     @ApiResponses(value = {
