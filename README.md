@@ -3,7 +3,7 @@
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | [![portfolio](https://img.shields.io/badge/github-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://github.com/marianmgm) [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/marian-maximov-6070662b1) |
 ## Project Description
-The Foreign Exchange application is a straightforward financial service tool that provides real-time currency exchange rates and conversion features. This application is built using Spring Boot and usess exchangerate-api.com
+The Foreign Exchange application is a straightforward financial service tool that provides real-time currency exchange rates and conversion features. This application is built using Spring Boot and uses exchangerate-api.com
 
 ## Swagger
      API documentation available at:
