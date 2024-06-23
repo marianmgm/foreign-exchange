@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(description = "Request payload for creating a transaction")
 public class TransactionRequest {
 
-    @Schema(example = "EUR", required = true)
+    @Schema(example = "EUR", required = true) //test
     private String sourceCurrency;
 
     @Schema(example = "BGN", required = true)
